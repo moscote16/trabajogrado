@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/index.css' %} ">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLATAFORMA</title>
+    
+</head>
+<body>
+    
+    <div>
+        <div class="imagen-container">
+            <img src="{% static 'img/imagen.jpg' %}" alt="Mi Imagen" >
+            <a href="{% url 'login' %}" >
+                <button class="boton">INICIO SESIÓN</button>
+            </a>
+            <a href="{% url 'registro' %}">
+                <button class="boton">REGISTRATE</button>
+            </a>
+        </div>
+        <div class="titulo">
+            <h1>DISEÑO DE UNA PLATAFORMA PARA EL PROCESAMIENTO<br>
+            DE DATOS ONLINE A PARTIR DE MUESTRAS BIOLÓGICAS<br>
+            DE PACIENTES CON ERLIQUIOSIS CANINA</h1>
+            <div>
+                <h6>El sistema creado recopila, almacena, analiza y visualiza datos sobre la enfermedad en los caninos.</h6>
+            </div>   
+        </div>        
+    </div>
+    <div class="content">
+        <div class="">
+            <h3 class="superior">Funciones:</h3>
+        </div>
+            <div class="elemento">
+                <h4 class="titulo1">Recolección de datos:</h4>
+                <p class="descripcion">Adquiere los datos generados a partir<br> de las muestras caninas tales como la saliva,<br> el pelo, etc.</p>
+            </div>
+            <div class="elemento">
+                <h4 class="titulo1">Formulario de pacientes:</h4>
+                <p class="descripcion">Es un documento para registrar<br>  y almacenar información detallada<br>  sobre el paciente.</p>
+            </div>
+            <div class="elemento">
+                <h4 class="titulo1">Visualización de datos en tiempo real:</h4>
+                <p class="descripcion">Permite al cliente monitorear<br>si los datos están funcionando correctamente.</p>
+            </div>
+            <div class="elemento">
+                <h4 class="titulo1">Bases de datos:</h4>
+                <p class="descripcion">Todos los datos recolectados<br> están encriptados lo cual ofrece<br>  una mayor seguridad y privacidad.</p>
+            </div>
+    </div>
+</body>
+</html>

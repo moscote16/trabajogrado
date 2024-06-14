@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href='{% static "css/registros.css" %}'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Registro</title>
+    <style>
+    .input-group {
+        position: relative;
+    }
+    
+    .icon {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-80%);
+        right: 10px; 
+        font-size: 24px; 
+        color: #007bff; 
+    }
+    </style> 
+</head>
+<body>
+    <div class="titulo">
+       <h1>Formulario de Registro del Canino</h1> 
+    </div>
+    <form action="" method="POST">
+        {% csrf_token %}
+        
+        <label for="id_canino"><strong>ID del Canino:</strong> </label>
+        <div class="input-group">
+        <input type="text" id="id_canino" name="username" required>
+        <i class="fas fa-user icon"></i>
+        </div>
+        
+        <label for="password_canino"><strong>Contraseña:</strong> </label>
+        <div class="input-group">
+        <input type="password" id="password_canino" name="password" required>
+        <i class="fas fa-lock icon"></i>
+        </div>
+
+        <label for="password_confirm"><strong>Confirmar Contraseña:</strong> </label>
+        <div class="input-group">
+        <input type="password" id="password_confirm" name="password1" required>
+        <i class="fas fa-lock icon"></i>
+        </div>
+    
+        <input type="submit" value="Crear Cuenta">
+        
+        <div class="login">
+            <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia Sesión</a></p>
+        </div>
+            
+    </form>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href='{% static "css/principal.css" %}'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <meta charset="utf-8" />
+    <title>Pagina principal</title>
+  </head>
+  <body>
+    <div class="navbar">
+        <a class="active" href="{% url 'registro1' %}">Registro del Canino</a>
+        <a class="active" href="{% url 'prueba' %}">Añadir Prueba</a>
+        <a class="active"  href="{% url 'listado_paciente' %}">Listado de Pacientes</a>
+        <a class="active" style="bacbackground-color: blue;" href="{% url 'listado_datos' %}">Datos</a>
+        <a class="active" style="bacbackground-color: blue;" href="{% url 'bancodatos' %}">Banco de Datos</a>
+        <a class="active" href="{% url 'actualizar' %}">Eliminar</a>
+        {% if user.is_authenticated %}
+        <a href="/logout/">Cerrar Sesion</a>
+        {% endif %} 
+      </div>
+    
+
+  </body>
+    <div class="titulo">
+    <h1>Bienvenido(a): {{ request.user.username|capfirst }}</h1>
+    </div>
+    <div class="image-container">
+        <img src="{% static 'img/perrojpg.jpg' %}" alt="Mi Imagen">
+    </div>
+    
+    
+</html>

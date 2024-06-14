@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href='{% static "css/prueba.css" %}'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Datos</title>
+    <style>
+        .file-list {
+            margin-top: 20px;
+        }
+        .file-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .file-list th, .file-list td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .file-list th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <a href="{% url 'bancodatos' %}" style="text-decoration: none;">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
+    <div class="titulo">
+        <h1> Datos</h1> 
+    </div>
+    <div class="file-list">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo de Prueba</th>
+                    <th>Diagnóstico</th>
+                    <th>Archivo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if prueba %}
+                    {% for p in prueba %}
+                        <tr>
+                            <td>{{ p.tipo_prueba }}</td>
+                            <td>{{ p.get_diagnostico_display }}</td>
+                            <td>{{ p.archivo.name }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="3">No se encontraron resultados.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

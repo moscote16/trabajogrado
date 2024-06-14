@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/listado.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .titulo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .volver {
+            margin-bottom: 10px;
+        }
+        .info-imagen {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .info-imagen img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        .info-canino {
+            margin-bottom: 20px;
+        }
+        .info-canino h2 {
+            margin-bottom: 10px;
+        }
+        .info-canino p {
+            margin-bottom: 5px;
+        }
+        .pruebas-realizadas {
+            margin-top: 20px;
+        }
+        .pruebas-realizadas h3 {
+            margin-bottom: 10px;
+        }
+        .pruebas-list li {
+            margin-bottom: 10px;
+            list-style: none;
+            padding: 10px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Pacientes</title>
+</head>
+<body>
+    <div class="container">
+        <div class="volver">
+            <a href="{% url 'listado_paciente' %}" style="text-decoration: none;">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+        </div>
+        <div class="titulo">
+            <h1>Resultados de Pacientes</h1>
+        </div>
+
+        {% if canino %}
+        <div class="info-imagen">
+            {% if canino.imagen %}
+            <img src="{{ canino.imagen.url }}" alt="Imagen del Canino">
+            {% endif %}
+        </div>
+        <div class="info-canino">
+            <h2>Información del Canino</h2>
+            <p><strong>ID:</strong> {{ canino.id_canino }}</p>
+            <p><strong>Nombre:</strong> {{ canino.nombre_canino }}</p>
+            <p><strong>Dueño:</strong> {{ canino.nombre_dueño }}</p>
+            <p><strong>Dictamen:</strong> {{ canino.dictamen }}</p>
+            <p><strong>Cédula:</strong> {{ canino.cedula }}</p>
+            <p><strong>Teléfono:</strong> {{ canino.telefono }}</p>
+            <p><strong>Años del Canino:</strong> {{ canino.años_canino }}</p>
+        </div>
+
+        <div class="pruebas-realizadas">
+            <h3>Pruebas Realizadas</h3>
+            <ul class="pruebas-list">
+                {% for prueba in canino.pruebas_set.all %}
+                <li>
+                    <strong>Tipo de Prueba:</strong> {{ prueba.get_tipo_prueba_display }}
+                    <br>
+                    <strong>Diagnóstico:</strong> {{ prueba.get_diagnostico_display }}
+                    <br>
+                    <strong>Archivo:</strong> {{ prueba.archivo.name }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+    </div>
+</body>
+</html>
