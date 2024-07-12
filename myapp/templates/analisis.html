@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/listado.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisis</title>
+    <style>
+        #numberInputs {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        #numberInputs input {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: calc(100% - 22px); 
+        }
+
+        #numberInputs input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        .input-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .input-buttons button {
+            padding: 10px;
+            margin-right: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <a href="{% url 'principal' %}" style="text-decoration: none;">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
+    <div class="titulo">
+        <h1>Análisis</h1>
+    </div>
+    
+    <form id="analysisForm" method="POST">
+        {% csrf_token %}
+        <label for="datos">Datos</label>
+        <input type="text" id="datos" name="datos" placeholder="Datos" required pattern="\d+">
+
+        <label for="matriz">Matriz</label>
+        <input type="text" id="matriz" name="matriz" placeholder="Matriz" required pattern="\d+">
+
+        <input type="submit" value="Analizar">
+    </form>
+
+    <div id="numberInputs">
+        {% for input in additional_inputs %}
+            <input type="number" name="{{ input.name }}" placeholder="{{ input.placeholder }}" required>
+        {% endfor %}
+        {% if additional_inputs %}
+            <div class="input-buttons">
+                <button type="button">Botón Izquierdo</button>
+                <button type="button">Botón Abajo</button>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

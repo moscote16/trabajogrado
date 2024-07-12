@@ -3,7 +3,7 @@ from .models import Pruebas, Canino
 
 @admin.register(Pruebas)
 class PruebaAdmin(admin.ModelAdmin):
-    list_display = ('tipo_prueba', 'get_diagnostico_display',  'archivo')
+    list_display = ('tipo_prueba', 'get_diagnostico_display',  'archivo', 'dimensiones')
 
     def get_diagnostico_display(self, obj):
         return obj.get_diagnostico_display()

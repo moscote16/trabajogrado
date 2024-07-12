@@ -27,6 +27,9 @@ class Pruebas(models.Model):
     tipo_prueba = models.CharField(max_length=100, choices=TIPO_PRUEBA_CHOICES)
     diagnostico = models.IntegerField(choices=DIAGNOSTICO_CHOICES)
     archivo = models.FileField(upload_to='uploads/')
+    dimensiones=models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
    
 
     def __str__(self):

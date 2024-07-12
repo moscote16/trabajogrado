@@ -59,6 +59,23 @@
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pagination a {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .pagination a.active {
+            background-color: #007bff;
+            color: white;
+        }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -95,19 +112,34 @@
         <div class="pruebas-realizadas">
             <h3>Pruebas Realizadas</h3>
             <ul class="pruebas-list">
-                {% for prueba in canino.pruebas_set.all %}
+                {% for prueba in pruebas %}
                 <li>
                     <strong>Tipo de Prueba:</strong> {{ prueba.get_tipo_prueba_display }}
                     <br>
                     <strong>Diagnóstico:</strong> {{ prueba.get_diagnostico_display }}
                     <br>
                     <strong>Archivo:</strong> {{ prueba.archivo.name }}
+                    <br>
+                    <strong>Fecha de Creación:</strong> {{ prueba.created_at|date:"F d, Y" }}
                 </li>
                 {% endfor %}
             </ul>
         </div>
-        {% endif %}
 
+        <div class="pagination">
+            {% if pruebas.has_previous %}
+                <a href="?page={{ pruebas.previous_page_number }}">&laquo; Anterior</a>
+            {% endif %}
+
+            <span class="current">
+                Página {{ pruebas.number }} de {{ pruebas.paginator.num_pages }}
+            </span>
+
+            {% if pruebas.has_next %}
+                <a href="?page={{ pruebas.next_page_number }}">Siguiente &raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
 </body>
 </html>

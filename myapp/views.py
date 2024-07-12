@@ -8,7 +8,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth import login, logout
 import pandas as pd
 import mimetypes 
-from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 
 
 class handler400(TemplateView):
@@ -95,7 +95,8 @@ def prueba(request):
         tipo_prueba = request.POST.get('tipo_prueba')
         diagnostico = int(request.POST.get('diagnostico'))
         archivo = request.FILES.get('csv_file')
-
+        dimensiones = request.POST.get('dimensiones')
+        
         try:
             canino = Canino.objects.get(id_canino=id_canino)
         except Canino.DoesNotExist:
@@ -113,14 +114,15 @@ def prueba(request):
             tipo_prueba=tipo_prueba,
             diagnostico=diagnostico,
             archivo=archivo,
+            dimensiones=dimensiones,
         )
 
         prueba.save()
         
         messages.success(request, 'La carga fue exitosa. ¿Quieres ingresar más datos? Por favor llena de nuevo el formulario')
         return redirect('prueba')
-    
     return render(request, 'prueba.html')
+
 @login_required
 def loginview(request): 
     return render(request, 'registration/login.html')
@@ -147,14 +149,43 @@ def resultadodatos(request):
 
     return render(request, 'resultadodatos.html', {"prueba": prueba})
 
+@login_required
 def resultadospacientes(request):
     if request.method == 'POST':
         numero_id = request.POST.get('Numero_Id')
-        try:
-            canino = Canino.objects.get(id_canino=numero_id)
-            return render(request, 'resultadospacientes.html', {'canino': canino})
-        except Canino.DoesNotExist:
-            messages.error(request, 'No se encontró un canino con el ID proporcionado.')
-            return redirect(reverse('listado_paciente') + '?mensaje_error1=No se encontró un canino con el ID proporcionado.')
+        request.session['numero_id'] = numero_id
+        return redirect('resultadospacientes')
 
-    return redirect('listado_paciente')
+    numero_id = request.session.get('numero_id')
+    if not numero_id:
+        return redirect('listado_paciente')
+
+    try:
+        canino = Canino.objects.get(id_canino=numero_id)
+    except Canino.DoesNotExist:
+        messages.error(request, 'No se encontró un canino con el ID proporcionado.')
+        return redirect(reverse('listado_paciente') + '?mensaje_error1=No se encontró un canino con el ID proporcionado.')
+    pruebas_list = canino.pruebas_set.all()
+    paginator = Paginator(pruebas_list, 10) 
+    page_number = request.GET.get('page')
+    pruebas = paginator.get_page(page_number)
+    
+    return render(request, 'resultadospacientes.html', {'canino': canino, 'pruebas': pruebas})
+
+@login_required
+
+def analisis(request):
+    additional_inputs = []
+
+    if request.method == 'POST':
+        datos = request.POST.get('datos')
+        matriz = request.POST.get('matriz')
+
+        if datos and datos.isdigit():
+            numberOfInputs = int(datos)
+            additional_inputs = [{'name': f'numero_{i}', 'placeholder': f'Número {i + 1}'} for i in range(numberOfInputs)]
+            messages.info(request, 'Se han generado los inputs adicionales. Por favor, complétalos y vuelve a hacer clic en "Analizar".')
+        else:
+            messages.error(request, 'Por favor, introduce un número válido en el campo "Datos".')
+
+    return render(request, 'analisis.html', {'additional_inputs': additional_inputs})
