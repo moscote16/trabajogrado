@@ -131,9 +131,6 @@ def loginview(request):
 def actualizar(request):
     return render(request, 'actualizar.html')
 
-@login_required
-def formulario(request):
-    return render (request, 'formulario.html')
 
 @login_required
 def bancodatos(request):
@@ -173,19 +170,31 @@ def resultadospacientes(request):
     return render(request, 'resultadospacientes.html', {'canino': canino, 'pruebas': pruebas})
 
 @login_required
-
 def analisis(request):
-    additional_inputs = []
-
     if request.method == 'POST':
         datos = request.POST.get('datos')
-        matriz = request.POST.get('matriz')
-
+        
         if datos and datos.isdigit():
             numberOfInputs = int(datos)
             additional_inputs = [{'name': f'numero_{i}', 'placeholder': f'Número {i + 1}'} for i in range(numberOfInputs)]
-            messages.info(request, 'Se han generado los inputs adicionales. Por favor, complétalos y vuelve a hacer clic en "Analizar".')
+            request.session['additional_inputs'] = additional_inputs
+            return redirect('formulario')
         else:
             messages.error(request, 'Por favor, introduce un número válido en el campo "Datos".')
+    
+    return render(request, 'analisis.html')
 
-    return render(request, 'analisis.html', {'additional_inputs': additional_inputs})
+@login_required
+def formulario(request):
+    additional_inputs = request.session.get('additional_inputs', [])
+    
+    if request.method == 'POST':
+        print (type(additional_inputs[0]))
+        for input in additional_inputs:
+            input_value = request.POST.get(input['name'])
+            print(f"{input['name']}: {input_value}")
+        
+        return redirect('formulario') 
+    
+    return render(request, 'formulario.html', {'additional_inputs': additional_inputs})
+

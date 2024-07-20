@@ -3,9 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datos del Canino</title>
+    <title>Formulario</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80%;
+            max-width: 800px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .submit-group {
+            width: 100%;
+            text-align: center;
+        }
+        input[type="submit"] {
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hola Mundo</h1>
+    <div class="form-container">
+        <h1>Formulario</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {% for input in additional_inputs %}
+                {% if forloop.first %}
+                    <div class="input-group">
+                {% endif %}
+                <input type="number" name="{{ input.name }}" placeholder="{{ input.placeholder }}" required>
+                {% if forloop.counter0|divisibleby:10 and not forloop.first %}
+                    </div><div class="input-group">
+                {% endif %}
+                {% if forloop.last %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="submit-group">
+                <input type="submit" value="Enviar">
+            </div>
+        </form>
+    </div>
 </body>
 </html>
