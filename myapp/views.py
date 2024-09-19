@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.urls import reverse
 from django.views.generic import TemplateView
 from django.contrib.auth import login, logout
-import pandas as pd
+from .funciones import procesar
 import mimetypes 
 from django.core.paginator import Paginator
 
@@ -119,6 +119,7 @@ def prueba(request):
 
         prueba.save()
         
+        print(f'Archivo subido con ID: {prueba.id}')
         messages.success(request, 'La carga fue exitosa. ¿Quieres ingresar más datos? Por favor llena de nuevo el formulario')
         return redirect('prueba')
     return render(request, 'prueba.html')
@@ -189,12 +190,7 @@ def formulario(request):
     additional_inputs = request.session.get('additional_inputs', [])
     
     if request.method == 'POST':
-        print (type(additional_inputs[0]))
-        for input in additional_inputs:
-            input_value = request.POST.get(input['name'])
-            print(f"{input['name']}: {input_value}")
-        
-        return redirect('formulario') 
-    
+        input_values = [request.POST.get(input['name']) for input in additional_inputs]
+        procesar(input_values)
+        return redirect('formulario')
     return render(request, 'formulario.html', {'additional_inputs': additional_inputs})
-

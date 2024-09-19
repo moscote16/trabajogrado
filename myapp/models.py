@@ -31,8 +31,7 @@ class Pruebas(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     
    
-
     def __str__(self):
-        return self.tipo_prueba
+        return f'Prueba {self.id} - {self.canino.id_canino}'
     
     
