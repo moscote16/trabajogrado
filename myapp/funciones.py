@@ -6,12 +6,16 @@ from .models import Pruebas
 
 def procesar(input_values):
     lista=[]
+    procesados = set()
     print(f"Valores ingresados: {input_values}")
     for value in input_values:
-        if value:
-            pruebas = Pruebas.objects.filter(id=value)
-            if pruebas.exists():
+        if value in procesados:
+            print(f"El ID {value} ya ha sido procesado. Se omite este análisis.")
+            continue
+        pruebas = Pruebas.objects.filter(id=value)
+        if pruebas.exists():
                 print(f"Se encontraron {pruebas.count()} archivos para ID: {value}")
+                procesados.add(value)
                 for prueba in pruebas:
                     archivo_path = prueba.archivo.path
                     print(f"Intentando acceder al archivo: {archivo_path}")
@@ -34,9 +38,21 @@ def procesar(input_values):
                             print(f"Error al leer el archivo para ID {value}: {e}")
                     else:
                         print(f"El archivo no existe en la ruta: {archivo_path}")
-            else:
+        else:
                 print(f"No se encontraron archivos para ID: {value}")
     
     print(len(lista))
     almacenando=np.concatenate(lista, axis=1)
     print (almacenando.shape)
+    print (type(almacenando))
+    #toca verificar que todos los datos en la variable almacenando sea de tipo numerico y que sea double 
+    Gmax=almacenando.max(axis=0)
+    Gmin=almacenando.min(axis=0)
+    print("-----Gmax-----")
+    print((Gmax.shape))
+    print("-----Gmin-----")
+    print((Gmin.shape))
+    print("-----GA1-----")
+    #GA1=Gmax-Gmin
+    #print(GA1.shape)
+    #print(GA1)
