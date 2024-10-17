@@ -46,13 +46,65 @@ def procesar(input_values):
     print (almacenando.shape)
     print (type(almacenando))
     #toca verificar que todos los datos en la variable almacenando sea de tipo numerico y que sea double 
+    almacenando = np.char.replace(almacenando.astype(str), ',', '.')
+    if almacenando.dtype != np.float64:
+        print("")
+    try:
+        almacenando = almacenando.astype(np.float64)
+        print("")
+    except Exception as e:
+        print("")
     Gmax=almacenando.max(axis=0)
     Gmin=almacenando.min(axis=0)
     print("-----Gmax-----")
     print((Gmax.shape))
     print("-----Gmin-----")
     print((Gmin.shape))
-    print("-----GA1-----")
-    #GA1=Gmax-Gmin
-    #print(GA1.shape)
-    #print(GA1)
+    print("-----Df-----")
+    DfGmaxGmin=Gmax-Gmin
+    print(DfGmaxGmin.shape)
+    print(DfGmaxGmin)
+    num_sensores = 8
+    datosDf=[]
+    for i in range(0, len(DfGmaxGmin), num_sensores):
+        datos_sensores = DfGmaxGmin[i:i+num_sensores]
+        id_value = input_values[i // num_sensores] if (i // num_sensores) < len(input_values) else None
+        pruebas_filtradas = Pruebas.objects.filter(id=id_value)
+    
+        for prueba_filtrada in pruebas_filtradas:
+            diagnostico_valor = prueba_filtrada.diagnostico
+            estado_canino = 0 if diagnostico_valor == 0 else 1
+            #datos_sensores = np.append(datos_sensores, estado_canino)
+
+            print(f"Sensores {i // num_sensores + 1} para ID {id_value}: {datos_sensores}")
+            print(f"Procesando datos para el id: {prueba_filtrada.id} - Estado Canino: {estado_canino}")
+        if estado_canino is not None:
+            if len(datos_sensores) == num_sensores:
+                datos_sensores = np.append(datos_sensores, estado_canino)  
+                print(f"sensores {i // num_sensores + 1} para ID {id_value}: {datos_sensores}")       
+                datosDf.append(datos_sensores)
+            else:
+                print(f" {num_sensores} datos de sensores {len(datos_sensores)}.")
+        else:
+            print(f"No se pudo determinar el estado del canino para ID {id_value}")
+        #una consulta por filter pasar la lista {input_values} rrecorrer en el mismo for 
+        #se va traer el campo diagnostico y lo guardo en una variable
+        #crear un if para clasificar si tiene diagnostico 
+        #guardar en una variable un numero ya sea que 0 sean enfermos y 1 sanos 
+        #agregar un ultimo elemento a lista datos_sensores debe     quedar una lista con nueve datos
+        
+        #convertirlo a un numpy array
+    datosDf = np.array(datosDf)    
+    print(f" {type(datosDf)}")
+    print("-----Datos de Sensores------")
+    print(datosDf)
+    #uncommit al proyecto 
+    #crear el manual de todos los metodos
+    # verificar si las rutas estas protegidas y que no se estalle todos a la vista hpme 
+    # un diseño mas bonito al home 
+    # retoques de la pagina 
+    # borrar datos 
+    # eliminar un usuario
+    # en listado paciente un boto eliminar en los archivos 
+    
+    
