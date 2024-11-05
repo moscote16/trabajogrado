@@ -4,18 +4,18 @@ from django.contrib.auth.models import User
 from .models import Pruebas, Canino
 from django.contrib import messages
 from django.urls import reverse
-from django.views.generic import TemplateView
 from django.contrib.auth import login, logout
 from .funciones import procesar
 import mimetypes 
 from django.core.paginator import Paginator
 
 
-class handler400(TemplateView):
-    template_name = "404.html"
+def error_404_view(request, exception):
+    return render(request, '404.html', status=404)
 
 def hello(request):
     return render(request,'index.html')
+
 
 def registroview(request):
     if request.method=='GET':
@@ -34,7 +34,8 @@ def registroview(request):
                 
         return  render(request, 'registration/registro.html',{
                 "error":'contraseña no coinciden'
-            })   
+            }) 
+          
         
 @login_required       
 def registro1(request):
@@ -84,9 +85,7 @@ def listado_paciente(request):
 
     return render(request, 'listado_paciente.html', {'canino': canino, 'mensaje_error1': mensaje_error1})
 
-@login_required
-def listado_datos(request):
-    return render(request, 'listado_datos.html')
+
 
 @login_required
 def prueba(request):
@@ -129,8 +128,20 @@ def loginview(request):
     return render(request, 'registration/login.html')
 
 @login_required
-def actualizar(request):
-    return render(request, 'actualizar.html')
+def Eliminar(request):
+    if request.method == 'POST':
+        id_canino = request.POST.get('id_canino')
+        
+        try:
+            canino = Canino.objects.get(id_canino=id_canino)
+            canino.delete()
+            messages.success(request, 'El canino ha sido eliminado exitosamente.')
+        except Canino.DoesNotExist:
+            messages.error(request, 'No se encontró un canino con el ID proporcionado.')
+
+        return redirect('Eliminar')
+
+    return render(request, 'Eliminar.html')
 
 
 @login_required
@@ -194,3 +205,12 @@ def formulario(request):
         procesar(input_values)
         return redirect('formulario')
     return render(request, 'formulario.html', {'additional_inputs': additional_inputs})
+
+def eliminar_prueba(request, prueba_id):
+    if request.method == 'POST':
+        prueba = get_object_or_404(Pruebas, id=prueba_id)
+        prueba.archivo.delete()  
+        prueba.delete()  
+        messages.success(request, 'El archivo ha sido eliminado exitosamente.')
+    
+    return redirect('resultadospacientes')

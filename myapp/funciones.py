@@ -45,7 +45,7 @@ def procesar(input_values):
     almacenando=np.concatenate(lista, axis=1)
     print (almacenando.shape)
     print (type(almacenando))
-    #toca verificar que todos los datos en la variable almacenando sea de tipo numerico y que sea double 
+ 
     almacenando = np.char.replace(almacenando.astype(str), ',', '.')
     if almacenando.dtype != np.float64:
         print("")
@@ -98,13 +98,6 @@ def procesar(input_values):
     print(f" {type(datosDf)}")
     print("-----Datos de Sensores------")
     print(datosDf)
-    #uncommit al proyecto 
-    #crear el manual de todos los metodos
-    # verificar si las rutas estas protegidas y que no se estalle todos a la vista hpme 
-    # un diseño mas bonito al home 
-    # retoques de la pagina 
-    # borrar datos 
-    # eliminar un usuario
-    # en listado paciente un boto eliminar en los archivos 
+
     
     

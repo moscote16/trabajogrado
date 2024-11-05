@@ -2,119 +2,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href='{% static "css/prueba.css" %}'>
+    <link rel="stylesheet" type="text/css" href='{% static "css/registro_2.css" %}'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro del Canino</title>
-    <style>
-        .boton-centrado {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .boton-centrado input[type="submit"] {
-            width: 40%;
-            padding: 12px;
-            font-size: 18px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .boton-centrado input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-        .file-input-container {
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-        }
-        .file-input-container label {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .file-input-container input[type="file"] {
-            display: none;
-        }
-        .file-input-container label.custom-file-upload {
-            border: 1px solid #007bff;
-            color: #007bff;
-            background-color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .file-input-container label.custom-file-upload:hover {
-            background-color: #007bff;
-            color: #fff;
-        }
-        .file-name {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #555;
-        }
-        .loading {
-            display: none;
-            font-size: 18px;
-            color: #007bff;
-            text-align: center;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 <body>
-    <div>
-        <a href="{% url 'principal' %}" style="text-decoration: none;">
-            <i class="fas fa-arrow-left"></i> Volver
-        </a>
-    </div>
-    <div class="titulo">
-       <h1>Registro del Canino</h1> 
-    </div>
-    <form method="POST" enctype="multipart/form-data" onsubmit="showLoading()">
-        {% csrf_token %}
-        
-        <div class="file-input-container">
-            <label for="image_file" class="custom-file-upload">
-                Seleccionar Imagen
-            </label>
-            <input type="file" id="image_file" name="image_file" accept="image/*" onchange="showFileName()">
-            <span class="file-name" id="file-name">Ningún archivo seleccionado</span>
+    <a href="{% url 'principal' %}" style="text-decoration: none;">
+        <i class="fas fa-arrow-left"></i> Pagina Anterior
+    </a>
+    <div class="container">
+        <div class="header">
+            
+            <h1>Registro del Canino</h1>
         </div>
+        <form method="POST" enctype="multipart/form-data" onsubmit="showLoading()">
+            {% csrf_token %}
+            
+            <div class="file-input-container">
+                <label for="image_file" class="custom-file-upload">
+                    Seleccionar Imagen
+                </label>
+                <input type="file" id="image_file" name="image_file" accept="image/*" onchange="showFileName()">
+                <span class="file-name" id="file-name">Ningún archivo seleccionado</span>
+            </div>
 
-        <label for="id_canino">ID del Canino:</label>
-        <input type="text" id="id_canino" name="id_canino" placeholder="ID Canino" required>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_canino">ID del Canino:</label>
+                    <input type="text" id="id_canino" name="id_canino" placeholder="ID Canino" required>
+                </div>
+                <div class="form-group">
+                    <label for="nombre_canino">Nombre del Canino:</label>
+                    <input type="text" id="nombre_canino" name="nombre_canino" placeholder="Nombre del Canino" required>
+                </div>
+            </div>
 
-        <label for="nombre_canino">Nombre del Canino:</label>
-        <input type="text" id="nombre_canino" name="nombre_canino" placeholder="Nombre del Canino" required>
-    
-        <label for="nombre_dueño">Nombre del dueño:</label>
-        <input type="text" id="nombre_dueño" name="nombre_dueño" placeholder="Nombre del dueño" required>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nombre_dueño">Nombre del dueño:</label>
+                    <input type="text" id="nombre_dueño" name="nombre_dueño" placeholder="Nombre del dueño" required>
+                </div>
+                <div class="form-group">
+                    <label for="años_canino">Años del Canino:</label>
+                    <input type="text" id="años_canino" name="años_canino" placeholder="Años Canino" required>
+                </div>
+            </div>
 
-        <label for="Dictamen">Dictamen:</label>
-        <textarea id="Dictamen" name="Dictamen" placeholder="Añadir una descripción..."></textarea>
-        
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="cedula">Cédula:</label>
+                    <input type="text" id="cedula" name="cedula" placeholder="Cédula" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" placeholder="Teléfono" required>
+                </div>
+            </div>
 
-        <label for="cedula">Cedula:</label>
-        <input type="text" id="cedula" name="cedula" placeholder="cedula" required>
+            <div class="form-row">
+               
+                <div class="form-group">
+                    <label for="Dictamen">Dictamen:</label>
+                    <textarea id="Dictamen" name="Dictamen" placeholder="Añadir una descripción..."></textarea>
+                </div>
+            </div>
 
-        <label for="telefono">Telefono:</label>
-        <input type="text" id="telefono" name="telefono" placeholder="telefono" required>
-
-        <label for="años_canino">Años del Canino:</label>
-        <input type="text" id="años_canino" name="años_canino" placeholder="Años Canino" required>
-
-        <div class="boton-centrado">
-            <input type="submit" value="Registrar">
-        </div>
-        <div class="loading" id="loading">Subiendo imagen, por favor espere...</div>
-    </form>
+            <div class="boton-centrado">
+                <input type="submit" value="Registrar">
+            </div>
+            <div class="loading" id="loading">Subiendo imagen, por favor espere...</div>
+        </form>
+    </div>
 
     <script>
         function showFileName() {

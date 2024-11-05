@@ -1,60 +1,41 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <link rel="stylesheet" type="text/css" href='{% static "css/login1.css" %}'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
-    <style>
-        .style {
-            color: #007bff; 
-            font-size: 35px; 
-            text-align: center; 
-        }
-        .input-group {
-            position: relative;
-        }
-        
-        .icon {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-80%);
-            right: 10px; 
-            font-size: 24px; 
-            color: #007bff; 
-        }
-        
-    </style>
+    <link rel="stylesheet" type="text/css" href='{% static "css/login.css" %}'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
-<body>    
-        <div class="form-container">
-            <div class="form-background">
-                
-                <h1 class="style">Iniciar sesión</h1>
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    
-                    <label for="id_canino"><strong>ID Canino:</strong></label><br>
-                    <div class="input-group">
-                        <input type="text" name="username" placeholder="ID Canino">
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <h1 class="login-title">Iniciar Sesión</h1>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="id_canino"><strong>ID Canino:</strong></label>
+                    <div class="input-wrapper">
+                        <input type="text" name="username" placeholder="ID Canino" required>
                         <i class="fas fa-user icon"></i>
                     </div>
+                </div>
 
-                    <label for="contraseña"><strong>Contraseña:</strong></label><br>
-                    <div class="input-group">
-                    <input type="password" name="password" placeholder="Contraseña">
-                    <i class="fas fa-lock icon"></i>
+                <div class="input-group">
+                    <label for="contraseña"><strong>Contraseña:</strong></label>
+                    <div class="input-wrapper">
+                        <input type="password" name="password" placeholder="Contraseña" required>
+                        <i class="fas fa-lock icon"></i>
                     </div>
+                </div>
 
-                    <input type="submit" value="Iniciar sesión">
-                    <div class="login">
-                        <p>¿Necesitas una cuenta? <a href="{% url 'registro' %}">Registrarse</a></p>
-                    </div>
-                </form>
-            </div>
+                <button type="submit" class="login-button">Iniciar Sesión</button>
+                <div class="register-link">
+                    <p>¿Necesitas una cuenta? <a href="{% url 'registro' %}">Registrarse</a></p>
+                </div>
+            </form>
         </div>
-    
+    </div>
 </body>
 </html>

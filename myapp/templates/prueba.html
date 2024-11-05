@@ -2,68 +2,24 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="stylesheet" type="text/css" href='{% static "css/prueba.css" %}'>
+    <link rel="stylesheet" type="text/css" href='{% static "css/prueba_1.css" %}'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Añadir Prueba</title>
-    <style>
-        .form-container {
-            display: flex;
-            justify-content: space-between;
-        }
-        .form-container form {
-            width: 40%;
-            box-sizing: border-box;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #bae4c1;
-        }
-        .form-container form input[type="text"],
-        .form-container form select,
-        .form-container form input[type="file"] {
-            width: 80%;
-            padding: 10px;
-            margin-bottom: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        .boton-centrado {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .boton-centrado input[type="submit"] {
-            width: 40%;
-            padding: 12px;
-            font-size: 18px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .boton-centrado input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-    </style>
 </head>
 <body>
-    <div>
-        <a href="{% url 'principal' %}" style="text-decoration: none;">
-            <i class="fas fa-arrow-left"></i> Volver
-        </a>
-    </div>
-    
-    <div class="form-container">
+    <a href="{% url 'principal' %}" style="text-decoration: none;">
+        <i class="fas fa-arrow-left"></i> Pagina Anterior
+    </a>
+    <div class="container">
+        <div class="header">
+           
+            <h1>Añadir Prueba</h1>
+        </div>
+
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="titulo">
-                <h1>Añadir Prueba</h1> 
-            </div>
             {% if messages %}
                 <div class="messages">
                     {% for message in messages %}
@@ -72,31 +28,44 @@
                 </div>
             {% endif %}
          
-            <label for="id_canino">ID del Canino:</label>
-            <input type="text" id="id_canino" name="id_canino" required>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_canino">ID del Canino:</label>
+                    <input type="text" id="id_canino" name="id_canino" required>
+                </div>
 
-            <label for="tipo_prueba">Tipo de Prueba:</label>
-            <select id="tipo_prueba" name="tipo_prueba" required>
-                <option value="">Seleccione...</option>
-                <option value="Aliento">Aliento</option>
-                <option value="opcion2">Opción 2</option>
-                <option value="opcion3">Opción 3</option>
-            </select>
+                <div class="form-group">
+                    <label for="tipo_prueba">Tipo de Prueba:</label>
+                    <select id="tipo_prueba" name="tipo_prueba" required>
+                        <option value="">Seleccione...</option>
+                        <option value="Aliento">Aliento</option>
+                        <option value="opcion2">Opción 2</option>
+                        <option value="opcion3">Opción 3</option>
+                    </select>
+                </div>
+            </div>
 
-            <label for="diagnostico">Diagnóstico:</label>
-            <select id="diagnostico" name="diagnostico" required>
-                <option value="">Seleccione...</option>
-                <option value="0">Con Erliquiosis</option>
-                <option value="1">Sin Erliquiosis</option>
-            </select>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="dimensiones">Dimensiones:</label>
+                    <input type="text" id="dimensiones" name="dimensiones" required>
+                </div>
+                <div class="form-group">
+                    <label for="diagnostico">Diagnóstico:</label>
+                    <select id="diagnostico" name="diagnostico" required>
+                        <option value="">Seleccione...</option>
+                        <option value="0">Con Erliquiosis</option>
+                        <option value="1">Sin Erliquiosis</option>
+                    </select>
+                </div>
+            </div>
 
-            <label for="dimensiones">Dimensiones:</label>
-            <input type="text" id="dimensiones" name="dimensiones" required>
-
-            <label for="csv_file">Selecciona un archivo:</label>  
-            <input type="file" id="csv_file" name="csv_file" accept=".txt">
-
-          
+            <div class="form-row">
+                <div class="form-group full-width">
+                    <label for="csv_file">Selecciona un archivo:</label>  
+                    <input type="file" id="csv_file" name="csv_file" accept=".txt">
+                </div>
+            </div>
 
             <div class="boton-centrado">
                 <input type="submit" value="Registrar Prueba">

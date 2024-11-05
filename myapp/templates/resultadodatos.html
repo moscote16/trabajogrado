@@ -2,49 +2,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href='{% static "css/prueba.css" %}'>
+    <link rel="stylesheet" type="text/css" href='{% static "css/datos.css" %}'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados de Datos</title>
-    <style>
-        .file-list {
-            margin-top: 20px;
-        }
-        .file-list table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .file-list th, .file-list td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        .file-list th {
-            background-color: #f2f2f2;
-        }
-        .download-btn {
-            padding: 5px 10px;
-            font-size: 12px;
-            color: white;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .download-btn:hover {
-            background-color: #0056b3;
-        }
-        .button-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .file-name {
-            flex-grow: 1;
-        }
-    </style>
 </head>
 <body>
     <div>
@@ -52,27 +14,29 @@
             <i class="fas fa-arrow-left"></i> Volver
         </a>
     </div>
-    <div class="titulo">
-        <h1>Datos</h1> 
-    </div>
+    
     <div class="file-list">
+        <div class="titulo">
+            <h1>Banco de Datos</h1> 
+        </div>
         <table>
             <thead>
                 <tr>
+                    <th>Nombre del Archivo</th>
                     <th>Tipo de Prueba</th>
-                    <th>Diagnóstico</th>
-                    <th>Archivo</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {% if prueba %}
                     {% for p in prueba %}
                         <tr>
+                            <td>{{ p.archivo.name }}</td>
                             <td>{{ p.tipo_prueba }}</td>
-                            <td>{{ p.get_diagnostico_display }}</td>
+                            <td>{{ p.fecha }}</td>
                             <td>
                                 <div class="button-container">
-                                    <span class="file-name">{{ p.archivo.name }}</span>
                                     <a href="{{ p.archivo.url }}" class="download-btn" download>Descargar</a>
                                 </div>
                             </td>
@@ -80,7 +44,7 @@
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="3">No se encontraron resultados.</td>
+                        <td colspan="4">No se encontraron resultados.</td>
                     </tr>
                 {% endif %}
             </tbody>

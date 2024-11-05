@@ -1,11 +1,17 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>404 Not Found</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/error4041.css' %}">
 </head>
 <body>
-    <h1>404 Not Found</h1>
-    <p>La página que buscas no existe.</p>
+    <div class="error-container">
+        
+        <h1>404 - Página No Encontrada</h1>
+        <p>Lo sentimos, la página que buscas no existe.</p>
+        <a href="{% url 'index' %}" class="boton">Volver al Inicio</a>
+    </div>
 </body>
 </html>
